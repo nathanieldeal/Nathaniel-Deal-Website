@@ -54,7 +54,7 @@ $(document).ready(function ($) {
 	// Waypoints Scrolling
 	
 	var links = $('.navigation').find('li');
-	var button = $('button');
+	var button = $('.intro button');
     var section = $('section');
     var mywindow = $(window);
     var htmlbody = $('html,body');
@@ -68,7 +68,8 @@ $(document).ready(function ($) {
             $('.navigation li[data-section="' + datasection + '"]').addClass('active').siblings().removeClass('active');
         }
         else {
-            $('.navigation li[data-section="' + datasection + '"]').addClass('active').siblings().removeClass('active');
+        	var newsection = parseInt(datasection) - 1;
+            $('.navigation li[data-section="' + newsection + '"]').addClass('active').siblings().removeClass('active');
         }
 
     });
@@ -151,6 +152,67 @@ $(document).ready(function ($) {
 	        return $(this).attr('src').replace('.svg', '.png');
 	    });
 	}    
+	
+	// AJAX Form Submission
+	
+	$("form").on("submit", function(event) {
+		
+		event.preventDefault();
+		var form = $(this);
+		var name = form.find('input[name=contact_name]');
+        var email = form.find('input[name=contact_email]');
+        var phone = form.find('input[name=contact_phone]');
+        var website = form.find('input[name=contact_website]');
+        var message = form.find('textarea[name=contact_message]');
+        
+        if (name.val()=='') {
+            name.addClass('hightlight');
+            return false;
+        } else name.removeClass('hightlight');
+        
+        if (email.val()=='') {
+            email.addClass('hightlight');
+            return false;
+        } else email.removeClass('hightlight');
+        
+        if (phone.val()=='') {
+            phone.addClass('hightlight');
+            return false;
+        } else phone.removeClass('hightlight');
+        
+        if (message.val()=='') {
+            message.addClass('hightlight');
+            return false;
+        } else message.removeClass('hightlight');
+        
+        var pattern = /^[0-9a-zA-Z\s]+$/;
+	    
+	    if(!pattern.test( message.val() ))
+	       {
+	         alert("No HTML Please");
+	         return false;
+			}; 
+        
+        var data = 'name=' + name.val() + '&email=' + email.val() + '&website='
+        + website.val() + '&message=' + encodeURIComponent(message.val());
+        
+        $.ajax({
+            url: "./form-submission.php",    
+            type: "GET",
+            data: data,        
+            cache: false,
+            success: function (html) {                
+                if (html==1) {                    
+                    $('form').fadeOut('slow');                    
+                    $('#form-result').fadeIn('slow');
+                    $('form').find('[name*="contact"]').val('')
+                    
+                } else alert('Sorry, unexpected error. Please try again later.');                
+            }        
+        });
+        
+	});
+	    
 	    
     
     //-------------------- Animate D3JS Charts --------------------//
