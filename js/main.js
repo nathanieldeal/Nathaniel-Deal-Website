@@ -166,26 +166,26 @@ $(document).ready(function ($) {
         var message = form.find('textarea[name=contact_message]');
         
         if (name.val()=='') {
-            name.addClass('hightlight');
+            name.parents(".control-group").addClass("error");
             return false;
-        } else name.removeClass('hightlight');
+        } else name.parents(".control-group").removeClass('error');
         
         if (email.val()=='') {
-            email.addClass('hightlight');
+            email.parents(".control-group").addClass("error");
             return false;
-        } else email.removeClass('hightlight');
+        } else email.parents(".control-group").removeClass('error');
         
         if (phone.val()=='') {
-            phone.addClass('hightlight');
+            phone.parents(".control-group").addClass("error");
             return false;
-        } else phone.removeClass('hightlight');
+        } else phone.parents(".control-group").removeClass('error');
         
         if (message.val()=='') {
-            message.addClass('hightlight');
+            message.parents(".control-group").addClass("error");
             return false;
-        } else message.removeClass('hightlight');
+        } else message.parents(".control-group").removeClass('error');
         
-        var pattern = /^[0-9a-zA-Z\s]+$/;
+        var pattern = /^[0-9a-zA-Z_.,!-\s\?\'\"\()]+$/;
 	    
 	    if(!pattern.test( message.val() ))
 	       {

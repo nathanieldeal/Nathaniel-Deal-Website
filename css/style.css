@@ -598,11 +598,6 @@ a:hover {
   text-align: center;
 }
 
-form .hightlight {
-  border-color: #B94A48;
-  color: #B94A48;
-}
-
 /* Media Queries */
 @media screen and (min-width: 1800px) {
   #section1 {
